@@ -1,0 +1,16 @@
+# Środowisko wirtualne
+venv/
+.venv/
+env/
+
+# Pamięć podręczna Pythona
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Systemowe
+.DS_Store
+Thumbs.db
