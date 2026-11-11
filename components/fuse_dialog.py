@@ -1,5 +1,5 @@
 import streamlit as st
-from fuse import Fuse
+from components.fuse import Fuse
 
 @st.dialog("Dodaj nowy bezpiecznik")
 def fuse_fill():
