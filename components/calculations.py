@@ -1,5 +1,7 @@
 import streamlit as st
 
+from components.save import save_button
+
 def calculate_load_and_check_errors():
     if st.button("🧮 Oblicz obciążenie obwodów i sprawdź błędy", type="primary", use_container_width=True):
         if not st.session_state.agd_list:
@@ -98,3 +100,4 @@ def calculate_load_and_check_errors():
                             st.markdown("<p style='color: #ff4b4b; font-weight: bold; margin-top: 5px;'>🔴 Przeciążenie!</p>", unsafe_allow_html=True)
                         else:
                             st.markdown("<p style='color: #09ab3b; font-weight: bold; margin-top: 5px;'>🟢 W normie</p>", unsafe_allow_html=True)
+    save_button()

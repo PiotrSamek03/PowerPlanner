@@ -13,7 +13,8 @@ def render_login_page():
         if st.button("Zaloguj się"):
             try:
                 res = supabase.auth.sign_in_with_password({"email": email, "password": password})
-                st.session_state["user"] = res.user
+                st.session_state["user_id"] = res.user.id
+                st.session_state["user_email"] = res.user.email
                 st.success("Zalogowano pomyślnie!")
                 st.rerun()
             except Exception as e:
