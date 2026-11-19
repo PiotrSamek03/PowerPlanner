@@ -2,19 +2,26 @@ import streamlit as st
 
 st.set_page_config(page_title="Kreator Rzutu Mieszkania", layout="wide")
 
-import components.fuses_table as fuses_table
-from components.fuse_dialog import fuse_fill
-from components.session_state import manage_session
-from components.sidebar import render_sidebar
-from components.agd_config import render_agd_config
-from components.calculations import calculate_load_and_check_errors
-from components.canvas import render_floor_plan_canvas
+from modules.state.session_manager import SessionManager
+from modules.ui.login_view import render_login_page
+from modules.ui.user_sidebar_view import render_user_sidebar
+from modules.ui.sidebar_view import render_sidebar
+from modules.ui.fuse_dialog_view import fuse_fill
+from modules.ui.fuses_table_view import render_fuses_table
+from modules.ui.canvas_view import render_floor_plan_canvas
+from modules.ui.agd_config_view import render_agd_config
+from modules.ui.calculations_view import render_calculations_section
 
-user = manage_session()
+user_id = SessionManager.ensure_session_initialized()
 
-if user:
-    st.title("⚡ PowerPlanner")
-    st.markdown("stwórz pomocniczy rzut mieszkania i sprawdź obciążenie obwodów elektrycznych w 4 prostych krokach")
+if not user_id:
+    render_login_page()
+else:
+    render_user_sidebar()
+    render_sidebar()
+
+    st.title("PowerPlanner")
+    st.markdown("Stwórz pomocniczy rzut mieszkania i sprawdź obciążenie obwodów elektrycznych w 4 prostych krokach.")
 
     st.markdown("1. Dodaj bezpieczniki do listy, aby móc przypisywać je do obwodów elektrycznych.")
     if len(st.session_state.fuses_list) == 0:
@@ -23,11 +30,8 @@ if user:
     if st.button("Dodaj bezpiecznik", icon=":material/add:"):
         fuse_fill()
 
-    st.subheader("📋 Lista bezpieczników i obwodów")
-    fuses_table.render_fuses_table(st.session_state.fuses_list)
-
-
-    render_sidebar()
+    st.subheader("Lista bezpieczników i obwodów")
+    render_fuses_table(st.session_state.fuses_list)
 
     st.markdown("2. Narysuj obszar mieszkania i dodaj sprzęt AGD oraz gniazdka (pamiętaj o uwzględnieniu oświetlenia).")
 
@@ -58,16 +62,14 @@ if user:
         * **Przesuwanie obiektu:** Kliknij przycisk "Edit" w menu nad białym płótnem, a następnie kliknij na obiekt.
         * **Usuwanie obiektu:** Kliknij przycisk "Edit", zaznacz element i wybierz "Delete" w menu nad białym płótnem.
         * **Powrót do rysowania:** W celu dalszego rysowania po przesunięciu lub usunięciu obiektu, naciśnij ikonkę z piórem "Edit" jeszcze raz.
-        * **Naprawa migania / błędów:** W razie migającego elementu na mapie, wciśnij przycisk "Reset canvas & history" w menu nad białym płutnem – usunie to ostatnio narysowany element.
+        * **Naprawa migania / błędów:** W razie migającego elementu na mapie, wciśnij przycisk "Reset canvas & history" w menu nad białym płótnem – usunie to ostatnio narysowany element.
         """)
 
     render_floor_plan_canvas()
 
     st.markdown("---")
-    st.subheader("⚙️ Krok 3: Konfiguracja urządzeń i przypisanie do obwodów")
-
+    st.subheader("Krok 3: Konfiguracja urządzeń i przypisanie do obwodów")
     render_agd_config()
 
     st.markdown("")
-
-    calculate_load_and_check_errors()
+    render_calculations_section()

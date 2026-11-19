@@ -1,11 +1,11 @@
 import streamlit as st
-from components.agd_colors import PALETA_AGD_SLOWNIK
+from modules.constants.agd_colors import PALETA_AGD_SLOWNIK
+from modules.logic.drawing_styles import DrawingStyleResolver
 
 def render_sidebar():
     with st.sidebar:
-        st.header("📐 Skala i Rozmiar Obszaru")
+        st.header("Skala i Rozmiar Obszaru")
         
-        # Suwaki i ustawienia płótna
         st.slider("Szerokość obszaru (X)", min_value=500, max_value=1600, value=900, step=50, key="canvas_width_slider")
         st.slider("Wysokość obszaru (Y)", min_value=400, max_value=1200, value=600, step=50, key="canvas_height_slider")
 
@@ -17,7 +17,6 @@ def render_sidebar():
             
         st.slider("Grubość linii / rozmiar:", 2, 40, 10, key="stroke_width_slider")
 
-        # Wybór typu rysowanego elementu
         element_typ = st.radio(
             "Co rysujesz?",
             [
@@ -28,19 +27,17 @@ def render_sidebar():
             key="element_typ_radio"
         )
 
-        # Logika kolorów
+        wybrana_nazwa = None
         if element_typ == "Sprzęt AGD / Światło (Własny kolor z palety)":
             wybrana_nazwa = st.selectbox(
                 "Wybierz kolor urządzenia:", 
                 list(PALETA_AGD_SLOWNIK.keys()),
                 key="wybrana_nazwa_agd_selectbox"
             )
-            
-            # Bezpieczne pobranie koloru ze słownika
-            stroke_color = PALETA_AGD_SLOWNIK.get(wybrana_nazwa, "#0077b6")
-            fill_color = stroke_color + "66"
-            
-            # Estetyczny podgląd koloru w sidebarze
+
+        stroke_color, fill_color = DrawingStyleResolver.resolve_colors(element_typ, wybrana_nazwa)
+
+        if wybrana_nazwa:
             st.markdown(
                 f"""
                 <div style="display: flex; align-items: center; gap: 12px; background-color: #1e1e1e; padding: 8px 12px; border-radius: 6px; border: 1px solid #333; margin-top: -5px; margin-bottom: 10px;">
@@ -53,14 +50,6 @@ def render_sidebar():
                 """,
                 unsafe_allow_html=True
             )
-            
-        elif element_typ.startswith("Ściana"):
-            stroke_color = "#000000"
-            fill_color = "rgba(0, 0, 0, 0.1)"
-        else:
-            stroke_color = "#FFD700"
-            fill_color = "rgba(255, 215, 0, 0.5)"
 
-        # Zapis ostatecznych kolorów do sesji (z czego korzysta główny app.py)
         st.session_state.stroke_color_sidebar = stroke_color
         st.session_state.fill_color_sidebar = fill_color

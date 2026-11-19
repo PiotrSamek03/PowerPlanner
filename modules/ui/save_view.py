@@ -1,10 +1,9 @@
 import streamlit as st
 
-from components.db import save_user_project
+from modules.services.project_service import save_user_project
 
 def save_button():
-    """Wywołuje funkcję zapisu projektu po kliknięciu przycisku."""
-    if st.button("💾 Zapisz projekt"):
+    if st.button("Zapisz projekt"):
         user_id = st.session_state.get("user_id")
         canvas_data = st.session_state.get("canvas_data")
         agd_list = st.session_state.get("agd_list", [])
