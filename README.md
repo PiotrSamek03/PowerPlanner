@@ -6,10 +6,10 @@
 
 ## 🚀 Kluczowe Funkcjonalności
 
-* **🎨 Rysowanie Rzutu (Interactive Canvas):** Rysowanie ścian, gniazdek oraz sprzętów AGD/oświetlenia z wyznaczonej palety kolorów.
-* **📋 Zarządzanie Bezpiecznikami:** Definiowanie obwodów i bezpieczników (np. 16A / 3680W) z podglądem w tabeli.
-* **⚙️ Mapowanie i Konfiguracja:** Przypisywanie nazw, mocy (W) oraz bezpieczników do wyznaczonych punktów na mapie.
-* **📊 Bilans Mocy i Konflikty Energetyczne:** 
+* ** Rysowanie Rzutu (Interactive Canvas):** Rysowanie ścian, gniazdek oraz sprzętów AGD/oświetlenia z wyznaczonej palety kolorów.
+* ** Zarządzanie Bezpiecznikami:** Definiowanie obwodów i bezpieczników (np. 16A / 3680W) z podglądem w tabeli.
+* ** Mapowanie i Konfiguracja:** Przypisywanie nazw, mocy (W) oraz bezpieczników do wyznaczonych punktów na mapie.
+* ** Bilans Mocy i Konflikty Energetyczne:** 
   * Automatyczna kalkulacja prądu.
   * Dwuetapowa weryfikacja błędów (przeciążenie całego domu vs. zły rozkład obwodów).
   * Wykrywanie bezpośrednich **konfliktów urządzeń** (wskazywanie par sprzętów, które najczęściej wybiją korki).

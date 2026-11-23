@@ -8,7 +8,6 @@ class AgdSynchronizer:
 
     @staticmethod
     def apply_updates(agd_list: list, canvas_data: dict, updates: list[dict]) -> tuple[list, dict]:
-        """Aktualizuje dane urządzeń AGD oraz synchronizuje kolory obiektów na płótnie JSON."""
         for item in updates:
             idx = item["idx"]
             if idx >= len(agd_list):
